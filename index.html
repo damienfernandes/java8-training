@@ -4,7 +4,7 @@
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-		<title>reveal.js</title>
+		<title>Java 8 training</title>
 
 		<link rel="stylesheet" href="css/reveal.css">
 		<link rel="stylesheet" href="css/theme/black.css">
@@ -24,8 +24,55 @@
 	<body>
 		<div class="reveal">
 			<div class="slides">
-				<section>Slide 1</section>
-				<section>Slide 2</section>
+
+        <section data-markdown="slides/index.md" >
+        </section>
+
+        <section data-markdown="slides/table-of-contents.md" >
+        </section>
+
+        <section data-markdown="slides/wait.md" >
+        </section>
+
+        <section>
+          <section id="java7"
+                   data-separator-vertical="^\r?\n---\r?\n$"
+                   data-markdown="slides/java7/what-about-java7.md" >
+          </section>
+          <section data-markdown="slides/java7/try-with-resources.md" >
+          </section>
+          <section data-markdown="slides/java7/multi-catch.md" >
+          </section>
+          <section data-markdown="slides/java7/underscores-in-numeric.md" >
+          </section>
+          <section data-markdown="slides/java7/nio.md" >
+          </section>
+        </section>
+
+        <section id="lambdas"
+                 data-separator-vertical="^\r?\n---\r?\n$"
+                 data-markdown="slides/java8/lambdas.md" >
+        </section>
+
+        <section id="default-methods"
+                 data-separator-vertical="^\r?\n---\r?\n$"
+                 data-markdown="slides/java8/default-methods.md" >
+        </section>
+
+        <section id="streams"
+                 data-separator-vertical="^\r?\n---\r?\n$"
+                 data-markdown="slides/java8/streams.md" >
+        </section>
+
+        <section id="optional"
+                 data-separator-vertical="^\r?\n---\r?\n$"
+                 data-markdown="slides/java8/optional.md" >
+        </section>
+
+        <section id="date-api"
+                 data-separator-vertical="^\r?\n---\r?\n$"
+                 data-markdown="slides/java8/date-api.md" >
+        </section>
 			</div>
 		</div>
 
