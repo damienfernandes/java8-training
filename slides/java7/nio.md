@@ -9,7 +9,7 @@
 
 ### java.nio.file.Files
 
-Utility methods for File related operations
+Utility methods for file related operations
 
 * `copy()` : copy a file
 * `move()` : move or rename a file
@@ -21,7 +21,7 @@ Utility methods for File related operations
 ### WatchService API
 
 * API to watch file system events
-* Events like file or folder _created_ / _deleted_ / _modified_
+* Events like entry _created_ / _deleted_ / _modified_
 
 ---
 
