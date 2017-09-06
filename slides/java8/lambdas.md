@@ -81,10 +81,87 @@ note: Show implementation in Java 7. Reference to _this_ and _toString()_ are wa
 Example
 
 ```java
-
+Arrays.sort(rosterAsArray,
+    (Person a, Person b) -> {
+        return a.getBirthday().compareTo(b.getBirthday());
+    }
+);
+Arrays.sort(rosterAsArray,
+    (a, b) -> Person.compareByAge(a, b)
+);
+Arrays.sort(rosterAsArray, Person::compareByAge);
 ```
 
 ---
 
+### Kinds of Method References
 
- 
+| Kind                                 | Example                              |
+| ------------------------------------ | ------------------------------------ |
+| static method                        | ContainingClass::staticMethodName    |
+| instance method                      | containingObject::instanceMethodName |
+| instance method of a particular type | ContainingType::methodName           |
+| constructor                          | ClassName::new                       |
+
+---
+
+### Functional interfaces
+
+* Interface with exactly one **abstract** method
+* Applies to interfaces that were created with previous versions of Java
+* Any interface can be functional interface
+* `@FunctionalInterface` annotation causes a compilation error if interface doesn't satisfy requirements
+
+---
+
+* Build-in new functional interfaces:
+  * Function<T,R> - takes an object of type T and returns R
+
+  * Supplier<T> - just returns an object of type T
+
+  * Predicate<T> - returns a boolean value based on input of type T
+
+  * Consumer<T> - performs an action with given object of type T
+
+  * BiFunction - like Function but with two parameters
+
+  * BiConsumer - like Consumer but with two parameters
+
+---
+
+### A few examples
+
+```java
+Function<String, String> atr = (name) -> {return "@" + name;};
+Function<String, Integer> leng = (name) -> name.length();
+Function<String, Integer> leng2 = String::length;
+```
+---
+
+### Printing out a list of String
+
+```java
+// Java 7
+for (String s : list) {
+    System.out.println(s);
+}
+//Java 8
+list.forEach(System.out::println);
+```
+
+---
+
+### Sorting a list of Strings
+```java
+// Java 7
+Collections.sort(list, new Comparator<String>() {
+    @Override
+    public int compare(String s1, String s2) {
+        return s1.length() - s2.length();
+    }
+});
+//Java 8
+Collections.sort(list, (s1, s2) -> s1.length() - s2.length());
+// or
+list.sort(Comparator.comparingInt(String::length));
+```
