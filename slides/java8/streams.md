@@ -14,12 +14,88 @@
 List<String> list = persons.stream()
         .filter(person -> person.getAge() < 40)
         .map(Person::getName)
-        .collect(toList());
+        .collect(Collectors::toList);
 ```
 
 Stream + lambdas = basis of functional-style programming in Java 8
 
 ---
+
+### Generate streams
+
+---
+
+#### Collections
+
+The Collection interface has two default methods on it for creating streams:
+
+- stream(): Returns a sequential Stream with the collection as its source
+- parallelStream(): Returns a possibly parallel Stream with the collection as its source
+
+---
+
+#### Files
+
+Read a file as a Stream using `Files.lines(Path filePath)`:
+
+```java
+try (Stream st = Files.lines(Paths.get("/path/to/file"))) {
+    st.forEach(System.out::println);
+}
+```
+
+note: Any `IOException` that is thrown while processing the file (after the file is opened) will get wrapped in an `UncheckedIOException` and thrown
+
+---
+
+Navigate file trees using a Stream using static methods on the `Files` class:
+
+- `list(Path dir)` : Stream of files in the given directory
+- `walk(Path dir)` : Stream that traverses the file tree depth-first starting at the given directory
+- `walk(Path dir, int maxDepth)` : Same as `walk(dir)` but with a maximum depth
+
+---
+
+#### Infinite streams
+
+Use the `generate` or `iterate` static methods on Stream:
+
+````java
+Stream.generate(() -> Math.random())
+      .forEach(System.out::print);
+````
+
+```java
+Stream.iterate(1, i -> i+1)
+      .forEach(System.out::print);
+```
+
+---
+
+#### Ranges
+
+Each primitive Stream (`IntStream`, `DoubleStream`, and `LongStream`) has a corresponding `range` method:
+
+```java
+IntStream.range(1, 11)
+         .forEach(System.out::println);
+```
+
+---
+
+#### Anything
+
+You can create a Stream from any number of elements or an array using the two following methods:
+
+```java
+Stream<Integer> s1 = Stream.of(1, 2, 3);
+Stream<Object> s2 = Arrays.stream(array);
+```
+
+`Stream.of` can take any number of parameters of any type.
+
+---
+
 ### Operations
 
 * Intermediate operation: return a new stream, lazy
@@ -32,7 +108,7 @@ Stream + lambdas = basis of functional-style programming in Java 8
 
 ---
 
-### ForEach
+#### ForEach
 
 * Replaces the _for loop_
 * More concise and more object-oriented
@@ -44,31 +120,31 @@ Files.list(Paths.get("."))
 
 ---
 
-### Map
+#### Map
 
 Apply a function to the elements of the stream
 
 ```java
 List<String> nameList = persons.stream()
                 .map(p -> p.getFirstname() + " " + p.getLastname())
-                .collect(Collectors.toList());
+                .collect(Collectors::toList);
 ```
 
 ---
 
-### Filter
+#### Filter
 
 Return a stream consisting of the elements that match a given predicate
 
 ```java
 List<Widget> redWidgets = widgets.stream()
                 .filter(w -> w.getColor() == RED)
-                .collect(Collectors.toList());
+                .collect(Collectors::toList);
 ```
 
 ---
 
-### FlatMap
+#### FlatMap
 
 ```java
 List<Developer> team = new ArrayList<>();
@@ -81,7 +157,7 @@ team.add(busy);
 List<String> teamLanguages = team.stream()
                                  .map(d -> d.getLanguages())
                                  .flatMap(l -> l.stream())
-                                 .collect(Collectors.toList());
+                                 .collect(Collectors::toList);
 teamLanguages.forEach(System.out::println);
 ```
 
@@ -114,38 +190,97 @@ Integer totalAge = population.stream()
 
 ---
 
+Check that at least one developer knows `Java` language :
+
+````java
+boolean atLeastOneKnowsJava = team.stream()
+                .map(d -> d.getLanguages())
+                .flatMap(l -> l.stream())
+                .anyMatch(l -> "java".equals(l));
+````
+
+---
+
 ### Collectors
 
-* Accumulate elements into a mutable result container (Collection, String, ...)
-* Do not aggregate elements
+* Accumulate elements into a _mutable_ result container (Collection, String, ...)
 * Consists of three things:
   - A **supplier** of an initial value
   - An **accumulator** which adds to the initial value
   - A **combiner** which combines two results into one
-* Use `collect(supplier,accumulator,combiner)`, or `collect(Collector)`
+* Use `collect(supplier,accumulator,combiner)` or `collect(Collector)`
 
 ---
 
 Simple Collectors
 
-Joining
+```java
+// Accumulate names into a List
+List<String> list = persons.stream()
+        .map(Person::getName)
+        .collect(Collectors::toList);
 
-Statistics
-
-Grouping and Partitioning
-
----
-
-### Create streams
-
-* Collections
-* Files
-* Infinite streams
-* Ranges
-* Anything
+// Accumulate names into a TreeSet
+Set<String> set = persons.stream()
+        .map(Person::getName)
+        .collect(Collectors.toCollection(TreeSet::new));
+```
 
 ---
 
-### A few examples
+Joining (similar to Apache Commons’ `StringUtil.join`)
 
+```java
+String names = persons.stream()
+        .map(Person::getName)
+        .collect(Collectors.joining(", "));
+```
 
+---
+
+Collect multiple statistics about a collection
+
+```java
+// Compute the count of people, as well as the minimum, maximum, sum, and average of their number of dependents
+IntSummaryStatistics stats = people.stream()
+                                   .collect(Collectors.summarizingInt(Person::getDependents));
+System.out.println(stats.getAverage());
+System.out.println("count = " + stats.getCount());
+System.out.println("max = " + stats.getMax());
+System.out.println("min = " + stats.getMin());
+```
+
+---
+
+Grouping
+
+```java
+// Group by first letter of name
+Map<Character,List<Developer>> map = developers.stream()
+        .collect(Collectors.groupingBy(dev -> dev.getName().charAt(0)));
+map.forEach((k,v) ->
+            System.out.println(k + " " + v.stream()
+                               .map(Developer::getName)
+                               .collect(Collectors.joining(", "))));
+```
+
+---
+
+Partitioning
+
+```java
+// Group by whether or not the developer knows Java
+Map<Boolean,List<Developer>> map = developers.stream()
+        .collect(Collectors.partitioningBy(Developer::knowsJava));
+```
+
+---
+
+### Practice
+
+* Create a list of 4 persons (login, firstName, lastName, age)
+* Compute the average age of the people older than 35.
+* Collect the login of the people older than 35.
+* Implement a method that calculates the smallest integer that can be divided by all the integers from 1 to X
+  * Using imperative algorithm
+  * Using lambdas when X = 5 => integer = 60 when X = 10 => integer = 2520
