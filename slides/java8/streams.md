@@ -7,34 +7,32 @@
 
 ---
 
-* Supports the map / filter / reduce pattern
-* **Lazily** evaluated
+* Supports the filter / map / reduce pattern
+* Elements in a stream are **lazily** evaluated
 
 ```java
 List<String> list = persons.stream()
         .filter(person -> person.getAge() < 40)
         .map(Person::getName)
         .collect(toList());
-
 ```
-
-
 
 Stream + lambdas = basis of functional-style programming in Java 8
 
 ---
+### Operations
 
-### Create streams
+* Intermediate operation: return a new stream, lazy
+* Terminal operation: produce a result or a side-effect
 
-* Collections
-* Files
-* Infinite streams
-* Ranges
-* Anything
+|     Type     |        Operations        |
+| :----------: | :----------------------: |
+| Intermediate |    map, filter, peek     |
+|   Terminal   | forEach, reduce, collect |
 
 ---
 
-### For each
+### ForEach
 
 * Replaces the _for loop_
 * More concise and more object-oriented
@@ -46,32 +44,85 @@ Files.list(Paths.get("."))
 
 ---
 
-### Map/Filter/Reduce
+### Map
+
+Apply a function to the elements of the stream
+
+```java
+List<String> nameList = persons.stream()
+                .map(p -> p.getFirstname() + " " + p.getLastname())
+                .collect(Collectors.toList());
+```
 
 ---
 
-### Peek
+### Filter
 
-* do some action without interrupting the stream
-* do not modify elements (use _map_ instead)
+Return a stream consisting of the elements that match a given predicate
 
 ```java
-Files.list(Paths.get("."))
-     .map(Path::getFileName)
-     .peek(System.out::println)
-     .forEach(System.out::println);
+List<Widget> redWidgets = widgets.stream()
+                .filter(w -> w.getColor() == RED)
+                .collect(Collectors.toList());
+```
+
+---
+
+### FlatMap
+
+```java
+List<Developer> team = new ArrayList<>();
+Developer polyglot = new Developer("polyglot").knows("scala").knows("groovy");
+Developer pragmatic = new Developer("pragmatic").knows("java").knows("javascript");
+
+team.add(polyglot);
+team.add(busy);
+
+List<String> teamLanguages = team.stream()
+                                 .map(d -> d.getLanguages())
+                                 .flatMap(l -> l.stream())
+                                 .collect(Collectors.toList());
+teamLanguages.forEach(System.out::println);
+```
+
+
+
+---
+
+### Reductions
+
+* Combine elements into a single summary result by repeated application of a combining operation
+* Class `Stream` provides methods for the most common reduction operations:
+  * max(), min(), count()
+  * allMatch(), noneMatch(), anyMatch()
+
+---
+
+Calculate the sum of the members' ages in a collection :
+
+```java
+Integer totalAgeReduce = population.stream()
+   .map(Person::getAge)
+   .reduce(0, (a, b) -> a + b);
+```
+
+```java
+Integer totalAge = population.stream()
+   .mapToInt(Person::getAge)
+   .sum();
 ```
 
 ---
 
 ### Collectors
 
-* Combine the elements of a Stream into one result
+* Accumulate elements into a mutable result container (Collection, String, ...)
+* Do not aggregate elements
 * Consists of three things:
   - A **supplier** of an initial value
   - An **accumulator** which adds to the initial value
   - A **combiner** which combines two results into one
-* Java 8 comes with several Collectors built in
+* Use `collect(supplier,accumulator,combiner)`, or `collect(Collector)`
 
 ---
 
@@ -85,5 +136,16 @@ Grouping and Partitioning
 
 ---
 
+### Create streams
+
+* Collections
+* Files
+* Infinite streams
+* Ranges
+* Anything
+
+---
+
 ### A few examples
+
 
