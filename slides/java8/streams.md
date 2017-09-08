@@ -280,9 +280,9 @@ Map<Boolean,List<Developer>> map = developers.stream()
 
 ### Practice
 
-* Create a list of 4 persons (login, firstName, lastName, age)
+* Read a list of `Person` (firstName, lastName, email, age) from file _MOCK_DATA.csv_
 * Compute the average age of the people older than 35.
-* Collect the login of the people older than 35.
+* Collect the email of the people older than 35.
 * Implement a method that calculates the smallest integer that can be divided by all the integers from 1 to X
   * Using imperative algorithm
   * Using lambdas when X = 5 => integer = 60 when X = 10 => integer = 2520
