@@ -1,5 +1,7 @@
 ### Default methods
 
+---
+
 * Put code in interfaces
 * Add methods in existing interfaces without breaking existing implementations
 
