@@ -57,7 +57,7 @@ public class Hello {
 }
 ```
 
-note: Show implementation in Java 7. Reference to _this_ and _toString()_ are way more complicated.
+note: Have a look at the same implementation in Java 7. Reference to _this_ and _toString()_ are way more complicated.
 
 ---
 
@@ -81,15 +81,15 @@ note: Show implementation in Java 7. Reference to _this_ and _toString()_ are wa
 Example
 
 ```java
-Arrays.sort(rosterAsArray,
+Arrays.sort(populationArray,
     (Person a, Person b) -> {
         return a.getBirthday().compareTo(b.getBirthday());
     }
 );
-Arrays.sort(rosterAsArray,
+Arrays.sort(populationArray,
     (a, b) -> Person.compareByAge(a, b)
 );
-Arrays.sort(rosterAsArray, Person::compareByAge);
+Arrays.sort(populationArray, Person::compareByAge);
 ```
 
 ---
@@ -138,7 +138,7 @@ Function<String, Integer> leng2 = String::length;
 ```
 ---
 
-### Printing out a list of String
+Printing out a list of `String`:
 
 ```java
 // Java 7
@@ -151,7 +151,8 @@ list.forEach(System.out::println);
 
 ---
 
-### Sorting a list of Strings
+Sorting a list of `String`:
+
 ```java
 // Java 7
 Collections.sort(list, new Comparator<String>() {
