@@ -70,11 +70,18 @@ note: Have a look at the same implementation in Java 7. Reference to _this_ and 
 ### Method references
 
 * Syntax sugar for lambda expressions
-* Works for:
-  * static method
-  * instance method of an object of a particular type
-  * instance method of an existing object
-  * constructor
+* Refer to existing methods instead of using a lambda expression
+
+---
+
+### Kinds of Method References
+
+| Kind            | Example                              |
+| --------------- | ------------------------------------ |
+| Static method   | ContainingClass::staticMethodName    |
+| Instance method | containingObject::instanceMethodName |
+| Class method    | ContainingType::methodName           |
+| Constructor     | ClassName::new                       |
 
 ---
 
@@ -94,17 +101,6 @@ Arrays.sort(populationArray, Person::compareByAge);
 
 ---
 
-### Kinds of Method References
-
-| Kind                                 | Example                              |
-| ------------------------------------ | ------------------------------------ |
-| static method                        | ContainingClass::staticMethodName    |
-| instance method                      | containingObject::instanceMethodName |
-| instance method of a particular type | ContainingType::methodName           |
-| constructor                          | ClassName::new                       |
-
----
-
 ### Functional interfaces
 
 * Interface with exactly one **abstract** method
@@ -115,24 +111,28 @@ Arrays.sort(populationArray, Person::compareByAge);
 ---
 
 * Build-in new functional interfaces:
-  * Function<T,R> - takes an object of type T and returns R
+  * `Function<T,R>` - takes an object of type T and returns R
 
-  * Supplier<T> - just returns an object of type T
+  * `Supplier<T>` - just returns an object of type T
 
-  * Predicate<T> - returns a boolean value based on input of type T
+  * `Predicate<T>` - returns a boolean value based on input of type T
 
-  * Consumer<T> - performs an action with given object of type T
+  * `Consumer<T>` - performs an action with given object of type T
 
-  * BiFunction - like Function but with two parameters
+  * `BiFunction`, `BiConsumer`
 
-  * BiConsumer - like Consumer but with two parameters
 
 ---
 
 ### A few examples
 
+---
+
 ```java
+// Function that prefixes a name with @
 Function<String, String> atr = (name) -> {return "@" + name;};
+
+// Function that returns length of a String
 Function<String, Integer> leng = (name) -> name.length();
 Function<String, Integer> leng2 = String::length;
 ```

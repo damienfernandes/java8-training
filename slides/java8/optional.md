@@ -7,9 +7,15 @@
 Brian Goetz in an [answer on stackoverflow](https://stackoverflow.com/questions/26327957/should-java-8-getters-return-optional-type/26328555#26328555)
 
 ---
-* Functional way to handle *null* (and avoid `NullPointerException`)
-* It's a monad because it is a parameterized type (`Optional<T>`) that:
-  * Implements a _bind_ operation `Optional.flatMap()` and a _unit_ function `Optional.of()`
+
+* Functional way to handle *null*
+* Avoid `NullPointerException`
+
+---
+
+* It's a **monad** because it is a parameterized type (`Optional<T>`) that:
+  * Implements a _bind_ operation `flatMap()`
+  * Implements a _unit_ function `of()`
   * Follows three laws: _left identity_, _right identity_ and _associativity_
 
 ---
@@ -95,11 +101,15 @@ getFilePath("application.properties").ifPresent(System.out::println);
 * Optional does not provide any additional value than an **empty Collection**
 * Wrap a Collection in an Optional only complicates code
 
+---
+
 #### Do not use in POJO fields and getters
 
 * Optional deliberately [doesn’t implement the Serializable interface](http://mail.openjdk.java.net/pipermail/jdk8-dev/2013-September/003274.html)
 * If your POJO accessors are using Optional it will be more complicated for a library or framework to use reflection to manipulate them
 * However some would like to use Optional this way (like [Stephen Colebourne](http://blog.joda.org/2015/08/java-se-8-optional-pragmatic-approach.html), contributor of Joda-Time)
+
+---
 
 #### Do not use in constructor or method parameters
 

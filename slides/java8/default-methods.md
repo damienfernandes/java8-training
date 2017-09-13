@@ -18,8 +18,10 @@ default public Stream stream() {
 ```java
 @FunctionalInterface
 public interface Iterable {
+
 	Iterator iterator();
-	default void forEach(Consumer<? super T> action) {
+
+    default void forEach(Consumer<? super T> action) {
 		Objects.requireNonNull(action);
 		for (T t : this) {
 			action.accept(t);
@@ -53,11 +55,31 @@ class FooBar implements Foo, Bar {
 
 ---
 
-* **Static** methods in interfaces are allowed too in Java 8
+#### When use default methods ?
+
+* Useful to enhance existing interfaces in an API without breaking anything
+* Was essential in order to add lambda support to existing Java `Collection`'s
+* But not a feature appropriate to use every day
+
+---
+
+#### Not only default methods
+
+* **Static** method is allowed in interface too in Java 8
 
 ```java
-// Creates a new stream containing given values
-public static<T> Stream<T> of(T... values) {
+public interface Stream {
+  ...
+
+  /**
+   * Returns a sequential ordered stream whose elements are the specified values.
+   *
+   * @param <T> the type of stream elements
+   * @param values the elements of the new stream
+   * @return the new stream
+   */
+  public static<T> Stream<T> of(T... values) {
     return Arrays.stream(values);
+  }
 }
 ```
