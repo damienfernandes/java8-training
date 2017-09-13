@@ -68,6 +68,8 @@ Several methods on the `Stream` interface return Optional (in case there are no 
 
 #### Method result
 
+* Use Optional as return type when value can be null
+
 ```java
 public Optional<Address> getAddress() {
     AddressDto address = PersonDao.getAddress(this.id);
@@ -90,10 +92,16 @@ getFilePath("application.properties").ifPresent(System.out::println);
 #### Do not wrap a Collection
 
 * Remember: Optional is a way to represent _no result_
-* Optional doesn’t provide any additional value than an empty Collection and only complicates code
+* Optional does not provide any additional value than an **empty Collection**
+* Wrap a Collection in an Optional only complicates code
 
 #### Do not use in POJO fields and getters
 
-* Optional deliberately doesn’t implement the Serializable interface](http://mail.openjdk.java.net/pipermail/jdk8-dev/2013-September/003274.html)
+* Optional deliberately [doesn’t implement the Serializable interface](http://mail.openjdk.java.net/pipermail/jdk8-dev/2013-September/003274.html)
+* If your POJO accessors are using Optional it will be more complicated for a library or framework to use reflection to manipulate them
+* However some would like to use Optional this way (like [Stephen Colebourne](http://blog.joda.org/2015/08/java-se-8-optional-pragmatic-approach.html), contributor of Joda-Time)
 
 #### Do not use in constructor or method parameters
+
+* Optional was not created for this purpose
+* When a method can accept optional parameters, it’s preferable to use method overloading and declare separate constructors
