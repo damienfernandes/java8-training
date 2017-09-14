@@ -20,7 +20,7 @@ Brian Goetz in an [answer on stackoverflow](https://stackoverflow.com/questions/
 
 ---
 
-Create an Optional that wraps a value using:
+An Optional wraps a value using:
 
 * `of(x)` for a non-null value
 * `ofNullable(x)` for a reference that may or may not be null
@@ -78,15 +78,9 @@ Several methods on the `Stream` interface return Optional (in case there are no 
 
 ```java
 public Optional<Address> getAddress() {
-    AddressDto address = PersonDao.getAddress(this.id);
+    AddressDto address = PersonDao.findAddress(this.id);
     return Optional.ofNullable(address);
 }
-```
-
-Usage:
-
-```java
-getFilePath("application.properties").ifPresent(System.out::println);
 ```
 
 ---
@@ -107,7 +101,7 @@ getFilePath("application.properties").ifPresent(System.out::println);
 
 * Optional deliberately [doesn’t implement the Serializable interface](http://mail.openjdk.java.net/pipermail/jdk8-dev/2013-September/003274.html)
 * If your POJO accessors are using Optional it will be more complicated for a library or framework to use reflection to manipulate them
-* However some would like to use Optional this way (like [Stephen Colebourne](http://blog.joda.org/2015/08/java-se-8-optional-pragmatic-approach.html), contributor of Joda-Time)
+* However some people would like to use Optional this way (like [Stephen Colebourne](http://blog.joda.org/2015/08/java-se-8-optional-pragmatic-approach.html), contributor of Joda-Time)
 
 ---
 

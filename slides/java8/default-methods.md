@@ -6,8 +6,12 @@
 * Add methods in existing interfaces without breaking existing implementations
 
 ```java
-default public Stream stream() {
-	return StreamSupport.stream(spliterator());
+public interface Stream {
+  ...
+
+  default public Stream stream() {
+    return StreamSupport.stream(spliterator());
+  }
 }
 ```
 

@@ -70,7 +70,7 @@ note: Have a look at the same implementation in Java 7. Reference to _this_ and 
 ### Method references
 
 * Syntax sugar for lambda expressions
-* Refer to existing methods instead of using a lambda expression
+* Can be used in place of a lambda when referring to an existing method
 
 ---
 
@@ -110,7 +110,7 @@ Arrays.sort(populationArray, Person::compareByAge);
 
 ---
 
-* Build-in new functional interfaces:
+* Build-in functional interfaces:
   * `Function<T,R>` - takes an object of type T and returns R
 
   * `Supplier<T>` - just returns an object of type T
@@ -145,7 +145,7 @@ Printing out a list of `String`:
 for (String s : list) {
     System.out.println(s);
 }
-//Java 8
+// Java 8
 list.forEach(System.out::println);
 ```
 
@@ -161,8 +161,20 @@ Collections.sort(list, new Comparator<String>() {
         return s1.length() - s2.length();
     }
 });
-//Java 8
+// Java 8
 Collections.sort(list, (s1, s2) -> s1.length() - s2.length());
 // or
 list.sort(Comparator.comparingInt(String::length));
 ```
+---
+
+### Practice
+
+- Display the name of all the files in the root folder of the project using :
+
+```
+new File(System.getProperty("user.dir")).listFiles()
+```
+
+- Create a class implementing `java.io.FileFilter` to display files ending with ".xml"
+- Use a lambda of type `java.io.FileFilter` to display files ending with ".xml"
