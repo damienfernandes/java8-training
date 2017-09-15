@@ -4,3 +4,5 @@
 * [Java 8 training project for DXP team from Jocelyn Ntakpe](https://github.com/jntakpe/dxp-practice)  
 * [What's new in Java 8 from Adam L. Davis](https://leanpub.com/whatsnewinjava8/read)  
 * [Java 8 Optional use cases](http://dolszewski.com/java/java-8-optional-use-cases/)
+* [50 nouvelles choses que l'on peut faire avec Java 8](https://fr.slideshare.net/jpaumard/50-nouvelles-choses-que-lon-peut-faire-avec-java-8)
+
