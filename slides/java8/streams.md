@@ -283,15 +283,7 @@ Map<Boolean,List<Developer>> map = developers.stream()
 ---
 
 * Read a list of `Person` (firstName, lastName, email, age) from file *MOCK_DATA.csv*
-* Compute the average age of the people older than 35.
-* Collect the email of the people older than 35.
-
----
-
-* Implement a method that calculates the smallest integer that can be divided by all the integers from 1 to X
-
-  * Using an imperative algorithm
-  * Using lambdas
-
-(when X = 5 => smallest integer = 60  
-when X = 10 => smallest integer = 2520)
+* Compute the average age of the mens older than 35
+* Collect the email of the people older than 35
+* Get oldest person
+* Get people age statistics (average, count, max, min)
