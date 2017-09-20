@@ -45,6 +45,12 @@ Work with Optional's using functional style methods:
 
 ---
 
+#### Remember one thing
+
+If you're using `Optional ` and you realize that you systematically write `isPresent()` or `get()` then you are wrong and can do it better.
+
+---
+
 Example
 
 ```java
@@ -109,3 +115,38 @@ public Optional<Address> getAddress() {
 
 * Optional was not created for this purpose
 * When a method can accept optional parameters, it’s preferable to use method overloading and declare separate constructors
+
+---
+
+### Practice
+
+Rewrite following method using `Optional`:
+
+```java
+public String getNickname(Person person) {
+    if (person != null) {
+        return person.getNickname();
+    }
+    return Person.defaultNickname();
+}
+```
+
+---
+
+Imagine `getCurrentServiceContext(...)` returns an `Optional<ServiceContext>`. Rewrite following method using `Optional`:
+
+```java
+public String getSessionId(String subSettingPrefix) {
+    String result;
+    ServiceContext current = getCurrentServiceContext(subSettingPrefix);
+    if (current != null) {
+        result = current.getSessionId();
+    } else {
+        // Else take the current session id
+        BusinessSessionManagementDelegate delegate = new BusinessSessionManagementDelegate();
+        result = delegate.getSessionId();
+    }
+    return result;
+}
+```
+
