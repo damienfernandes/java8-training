@@ -176,7 +176,7 @@ teamLanguages.forEach(System.out::println);
 
 ---
 
-Calculate the sum of the members' ages in a collection :
+Calculate the sum of the members age in a collection :
 
 ```java
 Integer totalAgeReduce = population.stream()

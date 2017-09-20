@@ -136,6 +136,7 @@ Function<String, String> atr = (name) -> {return "@" + name;};
 Function<String, Integer> leng = (name) -> name.length();
 Function<String, Integer> leng2 = String::length;
 ```
+
 ---
 
 Printing out a list of `String`:
@@ -166,6 +167,7 @@ Collections.sort(list, (s1, s2) -> s1.length() - s2.length());
 // or
 list.sort(Comparator.comparingInt(String::length));
 ```
+
 ---
 
 ### Practice
